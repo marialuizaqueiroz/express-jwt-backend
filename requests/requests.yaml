@@ -1,0 +1,387 @@
+type: collection.insomnia.rest/5.0
+name: Mini-projeto-fullstack
+meta:
+  id: wrk_f2fd5749d6af490580f1830a932e10d5
+  created: 1761160710883
+  modified: 1761160710883
+  description: ""
+collection:
+  - name: Mini-projeto-fullstack
+    meta:
+      id: fld_3f53d8bba52049828a9fd7a8b0d50d50
+      created: 1761160710888
+      modified: 1761160710888
+      sortKey: -1761160703031
+      description: ""
+    children:
+      - url: "{{base_url}}/register"
+        name: "[SUCESSO] Cadastrar usuário"
+        meta:
+          id: req_e39c9bd95b74477da541d2c6e2c6ea11
+          created: 1761160710891
+          modified: 1761160710891
+          isPrivate: false
+          description: ""
+          sortKey: -1761160703030
+        method: POST
+        body:
+          mimeType: application/json
+          text: "{\r
+
+            \  \"name\": \"Maria Teste\",\r
+
+            \  \"email\": \"teste.postman123@exemplo.com\",\r
+
+            \  \"password\": \"Senha@Forte123\"\r
+
+            }"
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{base_url}}/api/login"
+        name: "[SUCESSO] Login de usuário"
+        meta:
+          id: req_0630e5fff16c4950a142b4348fc4f83b
+          created: 1761160710894
+          modified: 1761160710894
+          isPrivate: false
+          description: ""
+          sortKey: -1761160703029
+        method: POST
+        body:
+          mimeType: application/json
+          text: "{\r
+
+            \  \"email\": \"ana@example.com\",\r
+
+            \  \"password\": \"senha789\"\r
+
+            }"
+        headers:
+          - name: Content-Type
+            value: application/json
+        scripts:
+          afterResponse: "// Este script guarda o token da resposta na variável de
+            ambiente\r
+
+            insomnia.environment.set(\"jwt_token\",
+            insomnia.response.json().token);"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{base_url}}/api/tasks"
+        name: "[Tasks] Criar tarefa"
+        meta:
+          id: req_d0d72e055e0d498e95bcbd8c96e9025c
+          created: 1761160710896
+          modified: 1761160710896
+          isPrivate: false
+          description: ""
+          sortKey: -1761160703028
+        method: POST
+        body:
+          mimeType: application/json
+          text: "{\r
+
+            \  \"title\": \"Minha Primeira Tarefa (Local)\",\r
+
+            \  \"description\": \"Testar a rota de criação de tarefa.\"\r
+
+            }"
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          disabled: false
+          token: "{{jwt_token}}"
+          prefix: ""
+        scripts:
+          afterResponse: "// Guarda o _id da tarefa criada na variável de ambiente
+            \"taskId\"\r
+
+            insomnia.environment.set(\"taskId\", insomnia.response.json()._id);"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{base_url}}/api/tasks"
+        name: "[Tasks] Listar minhas tarefas"
+        meta:
+          id: req_773357775ee14588b98b93b037a3a9b3
+          created: 1761160710899
+          modified: 1761160710899
+          isPrivate: false
+          description: ""
+          sortKey: -1761160703027
+        method: GET
+        authentication:
+          type: bearer
+          disabled: false
+          token: "{{jwt_token}}"
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{base_url}}/api/tasks/{{taskId}}"
+        name: "[Tasks] Obter tarefa por id"
+        meta:
+          id: req_949dce93bf61424d8f923ee1a96e8732
+          created: 1761160710902
+          modified: 1761160710902
+          isPrivate: false
+          description: ""
+          sortKey: -1761160703026
+        method: GET
+        body:
+          mimeType: text/plain
+          text: "{\r
+
+            \  \"title\": \"Minha Primeira Tarefa (Local)\",\r
+
+            \  \"description\": \"Testar a rota de criação de tarefa.\"\r
+
+            }"
+        headers:
+          - name: Content-Type
+            value: text/plain
+        authentication:
+          type: bearer
+          disabled: false
+          token: "{{jwt_token}}"
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{base_url}}/api/tasks/{{taskId}}"
+        name: "[Tasks] Atualizar tarefa (Parcial)"
+        meta:
+          id: req_a68f512080544890a1de7a9420b4cda6
+          created: 1761160710904
+          modified: 1761160710904
+          isPrivate: false
+          description: ""
+          sortKey: -1761160703025
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: "{\r\n  \"completed\": true\r\n}"
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          disabled: false
+          token: "{{jwt_token}}"
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{base_url}}/api/tasks/{{taskId}}"
+        name: "[Tasks] Atualizar tarefa (Total)"
+        meta:
+          id: req_0e1dc29746404bd1a8bb14aedabc19e2
+          created: 1761160710906
+          modified: 1761160710906
+          isPrivate: false
+          description: ""
+          sortKey: -1761160703024
+        method: PUT
+        body:
+          mimeType: application/json
+          text: "{\r
+
+            \  \"title\": \"Tarefa Atualizada (PUT)\",\r
+
+            \  \"description\": \"Esta descrição foi completamente
+            substituída.\",\r
+
+            \  \"completed\": true\r
+
+            }"
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          disabled: false
+          token: "{{jwt_token}}"
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{base_url}}/api/tasks/{{taskId}}"
+        name: "[Tasks] Deletar tarefa"
+        meta:
+          id: req_948ccc3e0bbb489296f8dc98abe97180
+          created: 1761160710908
+          modified: 1761160710908
+          isPrivate: false
+          description: ""
+          sortKey: -1761160703023
+        method: DELETE
+        authentication:
+          type: bearer
+          disabled: false
+          token: "{{jwt_token}}"
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{base_url}}/api/tasks"
+        name: "[Tasks] ERRO - Criar tarefa (Mal formatada)"
+        meta:
+          id: req_230f9336a05144b2a885fe723fa0c667
+          created: 1761160710911
+          modified: 1761160710911
+          isPrivate: false
+          description: ""
+          sortKey: -1761160703022
+        method: POST
+        body:
+          mimeType: application/json
+          text: "{\r
+
+            \  \"description\": \"Tentativa de criar tarefa sem título.\"\r
+
+            }"
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          disabled: false
+          token: "{{jwt_token}}"
+          prefix: ""
+        scripts:
+          afterResponse: "// Guarda o _id da tarefa criada na variável de ambiente
+            \"taskId\"\r
+
+            insomnia.environment.set(\"taskId\", insomnia.response.json()._id);"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{base_url}}/api/tasks"
+        name: "[Tasks] ERRO - Listar tarefas (Sem Token)"
+        meta:
+          id: req_b552a6abc15b4100966979643fa41914
+          created: 1761160710912
+          modified: 1761160710912
+          isPrivate: false
+          description: ""
+          sortKey: -1761160703021
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{base_url}}/api/tasks"
+        name: "[Tasks] ERRO - Listar tarefas (Token Inválido)"
+        meta:
+          id: req_c145727bdd1d4c78b6ee16c5d0f4fb1b
+          created: 1761160710913
+          modified: 1761160710913
+          isPrivate: false
+          description: ""
+          sortKey: -1761160703020
+        method: GET
+        authentication:
+          type: bearer
+          disabled: false
+          token: 12345abcdefg
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{base_url}}/api/tasks/68f92b8c2a278ca5193b99a3"
+        name: "[Tasks] ERRO - Segurança (Acesso Indevido 404)"
+        meta:
+          id: req_278b7b2f5d554b47974f08e3886d5f50
+          created: 1761160710915
+          modified: 1761160710915
+          isPrivate: false
+          description: ""
+          sortKey: -1761160703019
+        method: GET
+        authentication:
+          type: bearer
+          disabled: false
+          token: "{{jwt_token}}"
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_66ef45cf5e2388bff78c7c0b8e5109bd28751554
+    created: 1761160710928
+    modified: 1761160710928
+environments:
+  name: Base Environment
+  meta:
+    id: env_66ef45cf5e2388bff78c7c0b8e5109bd28751554
+    created: 1761160710918
+    modified: 1761160710918
+    isPrivate: false
