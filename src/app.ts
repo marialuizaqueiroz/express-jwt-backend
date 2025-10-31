@@ -6,8 +6,7 @@ import { errorMiddleware } from "./middlewares/error.middleware";
 import authRouter from "./routes/auth.router";
 import taskRoutes from "./routes/task.router"; 
 import logger from "./utils/logger";
-
-// const cors = require('cors'); // <--- ERRO: Apagámos esta linha duplicada
+// import serverless from "serverless-http"; 
 
 const app = express();
 app.use(cors());
@@ -17,6 +16,8 @@ app.use("/api", authRouter);
 app.use("/api/tasks", taskRoutes); 
 
 app.use(errorMiddleware);
+
+// export const handler = serverless(app);
 
 // --- CORREÇÃO DA LÓGICA ASSÍNCRONA ---
 
