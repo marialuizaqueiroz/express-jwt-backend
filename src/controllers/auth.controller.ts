@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import * as userService from '../services/user.service';
-import * as jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import config from '../config';
 import logger from '../utils/logger';
 

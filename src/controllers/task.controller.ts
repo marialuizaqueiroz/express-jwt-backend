@@ -93,19 +93,32 @@ export const updateTaskPut = async (req: Request, res: Response) => {
 export const updateTaskPatch = async (req: Request, res: Response) => {
   try {
     const userId = (req.user as UserPayload).sub;
-    const taskId = req.params.id;
-    const update = req.body; 
 
-    const updatedTask = await taskService.updateTask(taskId, userId, update, false); 
+    // Tenta pegar o ID de várias fontes (params ou body)
+    let taskId = req.params.id;
+    if (!taskId || taskId === 'undefined') {
+      taskId = req.body._id || req.body.id;
+    }
+
+    // Validação adicional
+    if (!taskId || taskId === 'undefined') {
+      logger.error('❌ ID da tarefa ausente ou inválido');
+      return res.status(400).json({ message: 'ID da tarefa inválido' });
+    }
+
+    const update = req.body;
+
+    const updatedTask = await taskService.updateTask(taskId, userId, update, false);
 
     if (!updatedTask) {
+      logger.warn(`⚠️ Tarefa não encontrada: ${taskId} (usuário ${userId})`);
       return res.status(404).json({ message: 'Tarefa não encontrada' });
     }
-    
-    logger.info(`Task updated (PATCH): ${taskId} by user: ${userId}`);
+
+    logger.info(`✅ Task atualizada (PATCH): ${taskId} por usuário ${userId}`);
     return res.status(200).json(updatedTask);
   } catch (err: any) {
-    logger.error('Error updating task (PATCH)', err);
+    logger.error('💥 Erro ao atualizar task (PATCH)', err);
     return res.status(500).json({ message: 'Erro interno' });
   }
 };

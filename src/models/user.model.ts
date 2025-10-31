@@ -3,7 +3,7 @@ import { Schema, model } from 'mongoose';
 export interface IUser {
   name: string;
   email: string;
-  password: string; // hashed
+  password: string; 
 }
 
 const userSchema = new Schema<IUser>({

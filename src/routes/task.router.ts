@@ -4,7 +4,7 @@ import { authMiddleware } from '../middlewares/auth.middleware';
 
 const router = Router();
 
-// Todas as rotas /api/tasks/* daqui para baixo exigirão um token JWT válido
+
 router.use(authMiddleware);
 
 // POST /api/tasks
